@@ -1,0 +1,14 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: webapp.simon.unipig.de
+spec:
+  rules:
+  - host: webapp.simon.unipig.de 
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: webapp-svc
+          servicePort: http

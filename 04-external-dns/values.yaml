@@ -1,0 +1,60 @@
+## External DNS 
+image:
+  registry: docker.io
+  repository: bitnami/external-dns
+  tag: 0.5.15-debian-9-r1
+  pullPolicy: IfNotPresent
+
+## This controls which types of resource external-dns should 'watch' for new
+## DNS entries.
+sources:
+  - service
+  - ingress
+
+## The DNS provider where the DNS records will be created (options: aws, google, inmemory, azure, rfc2136 )
+provider: aws
+
+# AWS Access keys to inject as environment variables
+aws:
+  secretKey: "XXXX"
+  accessKey: "XXXX"
+  # pre external-dns 0.5.9 home dir should be `/root/.aws`
+  credentialsPath: "/.aws"
+  roleArn: ""
+  region: "eu-central-1"
+  # Filter for zones of this type (optional, options: public, private)
+  zoneType: "public"
+
+## Limit possible target zones by domain suffixes (optional)
+domainFilters: []
+## Limit possible target zones by zone id (optional)
+zoneIdFilters: []
+# Filter sources managed by external-dns via annotation using label selector semantics (default: all sources)
+annotationFilter: ""
+## Adjust the interval for DNS updates
+interval: "1m"
+
+# Registry to use for ownership (txt or noop)
+registry: "txt"
+
+# When using the TXT registry, a name that identifies this instance of ExternalDNS
+txtOwnerId: "simon"
+
+## Modify how DNS records are sychronized between sources and providers (options: sync, upsert-only )
+policy: upsert-only
+
+# Verbosity of the logs (options: panic, debug, info, warn, error, fatal)
+logLevel: info
+
+## CPU and Memory limit and request for external-dns
+resources: 
+  limits:
+    memory: 50Mi
+  requests:
+    memory: 50Mi
+    cpu: 10m
+
+rbac:
+  create: true
+  # Beginning with Kubernetes 1.8, the api is stable and v1 can be used.
+  apiVersion: v1beta1

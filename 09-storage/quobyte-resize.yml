@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+  name: quobyte-resize
+parameters:
+  availability: dbl1
+  type: quobyte
+provisioner: kubernetes.io/cinder
+allowVolumeExpansion: true
+reclaimPolicy: Delete

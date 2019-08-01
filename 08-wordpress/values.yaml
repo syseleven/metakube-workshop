@@ -1,0 +1,172 @@
+## Wordpress 
+##
+image:
+  registry: docker.io
+  repository: bitnami/wordpress
+  tag: 5.2.2-debian-9-r12
+
+## User of the application
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressUsername: user
+
+## Application password
+## Defaults to a random 10-character alphanumeric string if not set
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressPassword: ooj5Guos4ahzae8ahnae
+
+## Admin email
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressEmail: admin@metakube.de
+
+## First name
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressFirstName: admin
+
+## Last name
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressLastName: LastName
+
+## Blog name
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressBlogName: User's Blog!
+
+## Table prefix
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+wordpressTablePrefix: wp_
+
+## Skip wizard installation (only if you use an external database that already contains WordPress data)
+##
+wordpressSkipInstall: false
+
+## Set to `false` to allow the container to be started with blank passwords
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+allowEmptyPassword: true
+
+## Set Apache allowOverride to None
+## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+##
+allowOverrideNone: false
+
+replicaCount: 1
+
+##
+## MariaDB chart configuration
+##
+##
+mariadb:
+  ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
+  enabled: true
+  ## Disable MariaDB replication
+  replication:
+    enabled: false
+
+  ## Create a database and a database user
+  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+  ##
+  db:
+    name: wordpress
+    user: wordpress
+    ## If the password is not specified, mariadb will generates a random password
+    ##
+    password: chiejiec4ophohw7aeKo
+
+  ## MariaDB admin password
+  ##
+  rootUser:
+    password: eelee1ieth5iaD3Ahfie
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  master:
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 8Gi
+
+## Kubernetes configuration
+## For minikube, set this to NodePort, elsewhere use LoadBalancer or ClusterIP
+##
+service:
+  type: ClusterIP
+  # HTTP Port
+  port: 80
+  # HTTPS Port
+  httpsPort: 443
+  ##
+  externalTrafficPolicy: Cluster
+
+## Configure extra options for liveness and readiness probes
+livenessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+## Configure the ingress resource that allows you to access the
+## WordPress installation. Set up the URL
+##
+ingress:
+  ## Set to true to enable ingress record generation
+  enabled: true
+
+  ## Set this to true in order to add the corresponding annotations for cert-manager
+  certManager: false
+
+  ## Ingress annotations done as key:value pairs
+  ## If tls is set to true, annotation ingress.kubernetes.io/secure-backends: "true" will automatically be set
+  ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
+  annotations:
+    kubernetes.io/ingress.class: nginx
+
+  ## The list of hostnames to be covered with this ingress record.
+  ## Most likely this will be just one host, but in the event more hosts are needed, this is an array
+  hosts:
+  - name: wordpress.<YOUR_NAME>.unipig.de
+    path: /
+
+  ## The tls configuration for the ingress
+  ## see: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+  tls:
+  - hosts:
+      - wordpress.<YOUR_NAME>.unipig.de
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+## Configure resource requests and limits
+##
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 300m
+
+##
+metrics:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: lusotycoon/apache-exporter
+    tag: v0.5.0
+    pullPolicy: IfNotPresent
+  ## Metrics exporter pod Annotation and Labels
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9117"
