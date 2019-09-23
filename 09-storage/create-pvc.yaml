@@ -1,0 +1,16 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: persistent-volume
+  labels:
+    label: "persistent-volume"
+spec:
+    # leave name empty to use the default storageclass
+  storageClassName:
+  accessModes:
+    # the volume can be mounted as read-write by a single node
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "2Gi"
