@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-app-env
@@ -8,6 +8,10 @@ metadata:
 spec:
   strategy:
     type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-env
   template:
     metadata:
       labels:
@@ -22,9 +26,9 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           value: "changeme"
         - name: MYSQL_DATABASE
-          value: "golem"
+          value: "syseleven"
         - name: MYSQL_USER
-          value: "golem"
+          value: "syseleven"
         - name: MYSQL_PASSWORD
           value: "changeme"
         ports:
