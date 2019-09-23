@@ -1,11 +1,10 @@
 image:
   repository: quay.io/jetstack/cert-manager-controller
-  tag: v0.9.0
   pullPolicy: IfNotPresent
 
 replicaCount: 1
 
-ingressShim: 
+ingressShim:
   defaultIssuerName: "letsencrypt-prod"
   defaultIssuerKind: "ClusterIssuer"
   defaultACMEChallengeType: "dns01"
