@@ -23,7 +23,7 @@ kind: Service
 metadata:
   name: nginx
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: nginx.simon.unipig.de
+    external-dns.alpha.kubernetes.io/hostname: nginx.XXX.metakube.org
     external-dns.alpha.kubernetes.io/ttl: "60"
 spec:
   selector:
