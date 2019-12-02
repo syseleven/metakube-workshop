@@ -12,11 +12,11 @@ kubectl get namespaces
 ```
 * Create Namespace
 ```
-kubectl create namespace web-application
+kubectl create namespace webapp
 ```
 * Set default namespace to context
 ```
-kubectl config set-context default --namespace=web-application 
+kubectl config set-context default --namespace=webapp
 ```
 * See change in kubeconfig
 ```
