@@ -40,10 +40,10 @@ prometheus:
       # message to display with an appropriate context why the authentication is required
       nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     hosts:
-      - prometheus.<DOMAINNAME>.plgrnd.be
+      - prometheus.<YOUR_NAME>.metakube.org
     tls:
       - hosts:
-          - prometheus.<DOMAINNAME>.plgrnd.be
+          - prometheus.<YOUR_NAME>.metakube.org
 
 defaultRules:
   rules:
@@ -66,10 +66,10 @@ grafana:
       # message to display with an appropriate context why the authentication is required
       nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     hosts:
-      - grafana.<DOMAINNAME>.plgrnd.be
+      - grafana.<YOUR_NAME>.metakube.org
     tls:
       - hosts:
-          - grafana.<DOMAINNAME>.plgrnd.be
+          - grafana.<YOUR_NAME>.metakube.org
 kubelet:
   enabled: true
   namespace: kube-system
