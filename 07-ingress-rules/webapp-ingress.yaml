@@ -4,6 +4,9 @@ kind: Ingress
 metadata:
   name: webapp.<YOUR_NAME>.metakube.org
 spec:
+  tls:
+    - hosts:
+        - webapp.<YOUR_NAME>.metakube.org
   rules:
   - host: webapp.<YOUR_NAME>.metakube.org
     http:
