@@ -8,10 +8,10 @@ spec:
     - hosts:
         - webapp.<YOUR_NAME>.metakube.org
   rules:
-  - host: webapp.<YOUR_NAME>.metakube.org
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: webapp-svc
-          servicePort: http
+    - host: webapp.<YOUR_NAME>.metakube.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: webapp-svc
+            servicePort: http
