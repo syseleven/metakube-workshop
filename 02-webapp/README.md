@@ -1,10 +1,14 @@
-# 2. Webapp Deployment 
+# 2. Webapp Deployment
 
-* Install Webapp:
+* Install webapp deployment:
 ```
 kubectl apply -f webapp-deploy.yml
-kubectl apply -f webapp-svc.yml 
-``
+```
+
+* Install webapp service
+```
+kubectl apply -f webapp-svc.yml
+```
 
 * Use kubectl to proxy remote port 80 to your local port 8080
 ```
