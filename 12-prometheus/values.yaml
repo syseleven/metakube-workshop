@@ -28,6 +28,11 @@ prometheus:
   prometheusSpec:
     retention: 4h
     ruleSelector: {}
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+    podMonitorSelectorNilUsesHelmValues: false
     replicas: 1
     podAntiAffinity: hard
   ingress:
@@ -37,13 +42,11 @@ prometheus:
       nginx.ingress.kubernetes.io/auth-type: basic
       # name of the secret that contains the user/password definitions
       nginx.ingress.kubernetes.io/auth-secret: basic-auth
-      # message to display with an appropriate context why the authentication is required
-      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     hosts:
-      - prometheus.<YOUR_NAME>.metakube.org
+      - prometheus.<DOMAINNAME>.metakube.org
     tls:
       - hosts:
-          - prometheus.<YOUR_NAME>.metakube.org
+          - prometheus.<DOMAINNAME>.metakube.org
 
 defaultRules:
   rules:
@@ -52,8 +55,16 @@ defaultRules:
 nodeExporter:
   enabled: false
 
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+  tlsProxy:
+    enabled: false
+
 grafana:
   adminPassword: admin
+  sidecar:
+    image: syseleven/k8s-sidecar:0.0.18-sys11-3
   persistence:
     enabled: false
   ingress:
@@ -63,13 +74,24 @@ grafana:
       nginx.ingress.kubernetes.io/auth-type: basic
       # name of the secret that contains the user/password definitions
       nginx.ingress.kubernetes.io/auth-secret: basic-auth
-      # message to display with an appropriate context why the authentication is required
-      nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     hosts:
-      - grafana.<YOUR_NAME>.metakube.org
+      - grafana.<DOMAINNAME>.metakube.org
     tls:
       - hosts:
-          - grafana.<YOUR_NAME>.metakube.org
+          - grafana.<DOMAINNAME>.metakube.org
+  grafana.ini:
+    users:
+      auto_assign_org_role: Editor
+    auth:
+      disable_login_form: true
+    auth.basic:
+      enabled: false
+    auth.anonymous:
+      enabled: true
+      org_role: Editor
+    analytics:
+      check_for_updates: false
+
 kubelet:
   enabled: true
   namespace: kube-system
